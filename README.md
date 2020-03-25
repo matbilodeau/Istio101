@@ -1,54 +1,55 @@
-# Istio and OpenCensus 101 - Lightning Demo
+# Istio et OpenCensus 101 - Demo Rapide
 
-This is the code I use for my Istio 101 talk and Istio and OpenCensus talk. Please take a look! I assume some prior knowledge of Kubernetes, but it's not totally required.
+Voici le code utilisé dans le cadre des présentation Istio 101 et OpenCensus par Sandeep Dinesh.  Jetez-y un coup d'oeil!  J'assume une certaine connaissance de Kubernetes mais ce n'est pas totalement nécessaire.
 
-Talk Video:
+Lien vidéo:
 [![Talk YouTube Link](https://i.ytimg.com/vi/8OjOGJKM98o/maxresdefault.jpg)](https://www.youtube.com/watch?v=8OjOGJKM98o)
 
 
-Want to get started with one click? Open this repo in Cloud Shell. It's free and has everything you need to get started.
+Prêt pour démarrer en un seul click? Ouvrez ce repo dans Cloud Shell.  C'est gratuit et tout est inclus pour démarrer.
 
-[![Open in Cloud Shell](http://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fthesandlord%2FIstio101&cloudshell_tutorial=README.md)
+[![Ouvrir dans Cloud Shell](http://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fmatbilodeau%2FIstio101&cloudshell_tutorial=README.md)
 
-# TL;DR - I want to skip setup
+# TL;DR - Passer la mise en place
 
-Run this:
+Roulez ceci:
 
 `make create-cluster deploy-istio build push deploy-stuff`
 
-Run this in another terminal:
+Roulez ceci dans une autre fenêtre de terminal:
 
 `make start-monitoring-services`
 
-## Cluster Setup
-You need a Kubernetes 1.10 or newer cluster.
+## Mise en place du Cluster
+Vous aurez besoin d'un cluster Kubernetes 1.14.10 ou plus récent.
 
-You will also need Docker and kubectl 1.9.x or newer installed on your machine, as well as the Google Cloud SDK. You can install the Google Cloud SDK (which will also install kubectl) [here](https://cloud.google.com/sdk).
+Vous aurez aussi besoin de Docker et kubectl 1.9.x ou plus récent installés sur votre machine, ainsi que Google Cloud SDK. Vous pouvez installer Google Cloud SDK (et kubectl) [ici](https://cloud.google.com/sdk).
 
-To create the cluster with Google Kubernetes Engine, run this command:
+Pour créer le cluster avec Google Kubernetes Engine, roulez cette commande:
 
 `make create-cluster`
 
-This will create a cluster called "my-istio-cluster" with 4 nodes in the us-west1-b region. This will deploy into the current active project set in your Google Cloud SDK. You can change this by passing in a custom value for the Project ID and/or Zone.
+Ceci va créer un cluster nommé "my-istio-cluster" avec 4 nodes dans la zone us-east1-b.  Celui-ci sera déployé dans le projet courrant sélectionné dans votre Google Cloud SDK. Vous pouvez changer ceci en paramétrant des valeurs personnalisées pour l'ID de projet et/ou Zone.
 
-`make create-cluster PROJECT_ID=your-custom-id-here ZONE=your-custom-zone`
+`make create-cluster PROJECT_ID=votre-projet-id-ici ZONE=votre-zone-ici`
 
-## Istio Setup
-This project assumes you are running on x64 Linux. If you are running on another platform, I highly reccomend using [Google Cloud Shell](https://cloud.google.com/shell) to get a free x64 Linux environment.
+## Mise en place Istio 
+Ce projet assume que vous roulez sur Linux x64. Si vous êtes sur une autre plateforme, il est fortement recommandé d'utiliser [Google Cloud Shell](https://cloud.google.com/shell) pour avoir un environnement Linux x64 gratuitement.
 
-To deploy Istio into the cluster, run
+Pour déployer Istio dans le cluster, roulez
 
 `make deploy-istio`
 
-This will deploy the Istio services and control plane into your Kubernetes Cluster. Istio will create its own Kubernetes Namespace and a bunch of services and deployments. In addition, this command will install helper services. Jaeger for tracing, Prometheus for monitoring, Servicegraph to visualize your microservices, and Grafana for viewing metrics.
+Ceci va déployer les services Istio et le control plane dans votre Cluster Kubernetes. Istio va créer son propre Namespace Kubernetes avec ses Services et Deployments. De plus, cette commande installe les services assistants. Jaeger pour les traces, Prometheus pour la surveillance, Servicegraph pour visualiser vos microservices, et Grafana pour visualiser les métriques.
 
-## Start Helper Services
+## Démarrer les services assistants
 
-Run this in another terminal:
+Roules ceci dans une autre fenêtre de terminal
 
 `make start-monitoring-services`
 
-This will create tunnels into your Kubernetes cluster for [Jaeger](http://localhost:16686), [Servicegraph](http://localhost:8088), and [Grafana](http://localhost:3000). This command will not exit as it keeps the connection open.
+Ceci va créer des tunnels vers votre Cluster Kubernetes pour [Jaeger](http://localhost:16686), [Servicegraph](http://localhost:8088), et [Grafana](http://localhost:3000). Cette commande ne termine pas puisqu'elle garde une connection ouverte.
+
 
 ## Create Docker Container
 
